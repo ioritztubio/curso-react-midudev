@@ -34,7 +34,32 @@ Para conseguir que aparezca necesitamos instalar las siguientes dependencias:
 Entonces, debemos ejecutar la siguiente línea para instalar las dependencias:
 
 ~~~
-npm install react react-dom -E
+3. npm install react react-dom -E
 ~~~
 
 Para finalizar debemos hacer la configuración de Vite. (vite.config.js)
+
+En vite.config.js:
+
+~~~
+import { defineConfig } from "vite";
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+    plugins: [react()]
+})
+~~~
+
+Ahora, hay que hacer el punto de entrada de nuestra aplicación. En el index.html hay un script que se carga al principio en la página web, este main.js es el punto de entrada de la aplicación.
+
+Como es el primer archivo en ejecutarse de toda la aplicación, en main.js debemos hacer lo siguiente:
+
+~~~
+import { createRoot } from "react-dom/client";
+
+const root = createRoot(document.getElementById('app'))
+
+root.render(<h1>Hello, world!</h1>)
+~~~
+
+Si hacemos *npm run dev* podremos observar que nos dará un error, esto se debe a que en Vite los archivos con extension *.js* no están preparados para funcionar con *.jsx*, por lo que debemos cambiar el main.js a main.jsx tanto como en su nombre de archivo como en index.html.
